@@ -1,8 +1,6 @@
 package model.entidades;
 
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -48,12 +46,19 @@ public class Reserva {
 		
 	}
 	
-	public void atualizarData(Date dataEntrada, Date dataSaida) {
-		this.dataEntrada = dataEntrada;
-		this.dataSaida = dataSaida;
-	}
+	public String atualizarData(Date dataEntrada, Date dataSaida) {
+		Date agora = new Date();
+		if (dataEntrada.before(agora) || dataSaida.before(agora)) {
+			System.out.println("Erro na reserva, as datas de reserva na atualizacao devem ser datas futuras.");
+		} 
+		if (!dataSaida.after(dataEntrada)) {
+			System.out.println("Erro! Em uma reserva, a data de saida deve ser depois da data de entrada!");	
+		}
+			this.dataEntrada = dataEntrada;
+			this.dataSaida = dataSaida;
+			return null;
+		}
 	
-
 	@Override
 	public String toString() {
 		return "Quarto: " + numeroQuarto + ", data de entrada: "
